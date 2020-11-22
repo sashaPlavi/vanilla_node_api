@@ -1,5 +1,7 @@
 const Product = require('../models/productModel');
 
+const { bodyParser } = require('../utils');
+
 //@desc  get all products
 // @route GET api/products
 async function getProducts(req, res) {
@@ -33,11 +35,16 @@ async function getProductById(req, res, id) {
 // @route POT api/products
 async function createProduct(req, res) {
   try {
+    const body = await bodyParser(req);
+
+    const { title, description, price } = JSON.parse(body);
+
     const product = {
-      title: 'test',
-      description: 'test description',
-      price: 100,
+      title,
+      description,
+      price,
     };
+
     const newProduct = await Product.create(product);
     res.writeHead(201, { 'Content-Type': 'application/json' });
     return res.end(JSON.stringify(newProduct));
