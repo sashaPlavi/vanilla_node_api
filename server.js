@@ -23,7 +23,7 @@ const server = http.createServer((req, res) => {
     req.method === 'PUT'
   ) {
     const id = req.url.split('/')[3];
-    console.log(id);
+    // console.log(id);
     updateProduct(req, res, id);
   } else {
     res.writeHead(404, { 'Content-Type': 'application/json' });

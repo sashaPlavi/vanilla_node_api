@@ -24,11 +24,13 @@ function create(product) {
 }
 function update(id, product) {
   return new Promise((resolve, reject) => {
-    console.log(id);
+    //console.log(id);
     const index = products.findIndex((p) => p.id === id);
+
     products[index] = { id, ...product };
-    console.log(products);
+    //console.log(products);
     writeDataToFile('./data/products.json', products);
+    //console.log(products[index]);
     resolve(products[index]);
   });
 }
