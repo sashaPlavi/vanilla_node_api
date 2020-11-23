@@ -22,9 +22,20 @@ function create(product) {
     resolve(newProduct);
   });
 }
+function update(id, product) {
+  return new Promise((resolve, reject) => {
+    console.log(id);
+    const index = products.findIndex((p) => p.id === id);
+    products[index] = { id, ...product };
+    console.log(products);
+    writeDataToFile('./data/products.json', products);
+    resolve(products[index]);
+  });
+}
 
 module.exports = {
   findAll,
   findById,
   create,
+  update,
 };
