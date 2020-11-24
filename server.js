@@ -8,7 +8,7 @@ const {
 } = require('./controller/productsController');
 
 const server = http.createServer((req, res) => {
-  // console.log(req.url);
+  console.log(req.url);
   if (req.url === '/api/products' && req.method === 'GET') {
     getProducts(req, res);
   } else if (

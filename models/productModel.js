@@ -1,11 +1,20 @@
 let products = require('../data/products.json');
+const db = require('../data/db');
 const { v4: uuidv4 } = require('uuid');
 
 const { writeDataToFile } = require('../utils');
 
 function findAll() {
+  console.log('bla conected');
+  //console.log(db);
   return new Promise((resolve, reject) => {
-    resolve(products);
+    const q = 'SELECT * FROM products';
+    db.query(q, function (err, result) {
+      if (err) throw err;
+      console.log(result);
+      resolve(result);
+    });
+    //products = { message: 'bla' };
   });
 }
 function findById(id) {
