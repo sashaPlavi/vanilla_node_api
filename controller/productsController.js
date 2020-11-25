@@ -19,7 +19,7 @@ async function getProductById(req, res, id) {
   try {
     let product = [];
     product = await Product.findById(id);
-    console.log(product);
+
     if (product.length === 0) {
       res.writeHead(404, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ message: 'product not found' }));
