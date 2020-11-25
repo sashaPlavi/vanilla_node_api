@@ -17,9 +17,10 @@ async function getProducts(req, res) {
 // @route GET api/products/:id
 async function getProductById(req, res, id) {
   try {
-    const product = await Product.findById(id);
-
-    if (!product) {
+    let product = [];
+    product = await Product.findById(id);
+    console.log(product);
+    if (product.length === 0) {
       res.writeHead(404, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ message: 'product not found' }));
     } else {
@@ -37,17 +38,19 @@ async function createProduct(req, res) {
   try {
     const body = await bodyParser(req);
 
-    const { title, description, price } = JSON.parse(body);
+    const { name, description, price } = JSON.parse(body);
 
     const product = {
-      title,
+      name,
       description,
       price,
     };
 
-    const newProduct = await Product.create(product);
-    res.writeHead(201, { 'Content-Type': 'application/json' });
-    return res.end(JSON.stringify(newProduct));
+    const result = await Product.create(product);
+    if (result) {
+      res.writeHead(201, { 'Content-Type': 'application/json' });
+      return res.end(JSON.stringify({ message: 'post inserted' }));
+    }
   } catch (err) {
     console.log(err);
   }
@@ -82,6 +85,7 @@ async function updateProduct(req, res, id) {
 //@desc  delete product by id
 // @route DELETE api/products/:id
 async function deleteProductById(req, res, id) {
+  console.log('delete ctrl');
   try {
     const product = await Product.findById(id);
 

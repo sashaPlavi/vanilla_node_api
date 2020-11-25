@@ -17,7 +17,7 @@ const server = http.createServer((req, res) => {
   ) {
     const id = req.url.split('/')[3];
     getProductById(req, res, id);
-  } else if (req.url === '/api/products' && req.method === 'PUT') {
+  } else if (req.url === '/api/products' && req.method === 'POST') {
     createProduct(req, res);
   } else if (
     req.url.match(/\/api\/products\/([0-9]+)/) &&
@@ -27,7 +27,7 @@ const server = http.createServer((req, res) => {
     // console.log(id);
     updateProduct(req, res, id);
   } else if (
-    req.url.match(/\/api\/products\/([0-9]+)/) &&
+    req.url.match(/\/api\/products\/([a-zA-Z0-9_]+-)/) &&
     req.method === 'DELETE'
   ) {
     const id = req.url.split('/')[3];

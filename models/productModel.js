@@ -14,21 +14,29 @@ function findAll() {
       console.log(result);
       resolve(result);
     });
-    //products = { message: 'bla' };
   });
 }
 function findById(id) {
+  const q = `SELECT * FROM products WHERE id='${id}'`;
   return new Promise((resolve, reject) => {
-    product = products.find((p) => p.id === id);
-    resolve(product);
+    db.query(q, function (err, result) {
+      if (err) throw err;
+      console.log(result);
+      resolve(result);
+    });
   });
 }
 function create(product) {
+  const { name, description, price } = product;
+  const id = uuidv4();
+  const q = `INSERT INTO products (id, name, description, price) VALUES ('${id}', '${name}', '${description}', ${price})`;
+  // console.log(q);
   return new Promise((resolve, reject) => {
-    const newProduct = { id: uuidv4(), ...product };
-    products.push(newProduct);
-    writeDataToFile('./data/products.json', products);
-    resolve(newProduct);
+    db.query(q, function (err, result) {
+      if (err) throw err;
+      console.log(result);
+      resolve(result);
+    });
   });
 }
 function update(id, product) {
@@ -41,9 +49,13 @@ function update(id, product) {
 }
 function rmv(id) {
   return new Promise((resolve, reject) => {
-    products = products.filter((p) => p.id !== id);
-    writeDataToFile('./data/products.json', products);
-    resolve();
+    const q = `DELETE FROM products WHERE id='${id}'`;
+    console.log(q);
+    db.query(q, function (err, result) {
+      if (err) throw err;
+      console.log(result);
+      resolve(result);
+    });
   });
 }
 
